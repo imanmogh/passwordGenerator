@@ -17,51 +17,65 @@ WHEN the password is generated
 THEN the password is either displayed in an alert or written to the page
 */
 
+
+//Variables
+var choices = [];
+var length;
+var lowerCaseChar = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
+var upperCaseChar = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
+var numericalCharcater = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+var specialCharacter = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "[", "]", ":", "?", "<", ">", ";", "/", ":"];
+
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-
+//generatePassword function
 function generatePassword() {
+
+  // 1. Prompt the criteria for the password
+    // a. Length of the password. No less than 8 and no more than 128
+      var length = parseInt(window.prompt("How many character would you like you password to generate?"));
+
+      if (length < 8 || length > 128) {
+        window.alert("Your password length must be between 8 and 128 characters");
+      }
+
+    // b. Include lowercase characters
+        if(window.confirm("Confirm using lowercase characters?")) {
+          choices = choices.concat(lowerCaseChar);
+         };
+
+    // c. Include uppercase characters
+      if(window.confirm("Confirm using uppercase characters?")) {
+        choices = choices.concat(upperCaseChar);
+       };
+
+    //d. Include numeric characters
+      if(window.confirm("Confirm using numbers?")) {
+          choices = choices.concat(numericalCharcater);
+         };
+
+    // e. Include special characters
+      if(window.confirm("Confirm using special characters?")) {
+          choices = choices.concat(specialCharacter);
+         };
   
-    // 1. Prompt the criteria for the password
-      // a. Length of the password. No less than 8 and no more than 128
-        var length = window.prompt("How many character would you like you password to generate?");
-
-      // b. Include lowercase characters
-        var lowercaseChar =window.confirm("Confirm using lowercase characters?");
-
-      // c. Include uppercase characters
-       var uppercaseChar = window.confirm("Confirm using uppercase characters?");
-
-      //d. Include numeric characters
-        var numericalCharcater = window.confirm("Confirm using numerical characters?");
-
-      // e. Include special characters
-        var SpecialCharacter = window.confirm("Confrim using special characters?");
-
-
-    // 2. Validate the password criteria
-    if (length >= 8 && length <= 128) {
-
+  // 2. Generate a password
+  var  newPassword = "";
+   for (var i = 0; i <= length; i++) {
+      console.log(newPassword);
+      var randomValue = Math.floor(Math.random() * choices.length);
+      newPassword = newPassword + choices[randomValue];
     }
-    else {
-      window.alert("Your password length must be between 8 and 128 characters");
-    }
-    
-    // 3. Generate a password
-    // 4. Display passsword onto screen
+    return newPassword;
 }
-
 
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-
-
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
